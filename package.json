@@ -1,0 +1,26 @@
+{
+  "name": "plan-outings-2025-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ADITYAPIMPALE11127/plan-outings-2025-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ADITYAPIMPALE11127/plan-outings-2025-backend/issues"
+  },
+  "homepage": "https://github.com/ADITYAPIMPALE11127/plan-outings-2025-backend#readme",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "csv-stringify": "^6.6.0",
+    "dotenv": "^17.2.3"
+  }
+}
