@@ -1,0 +1,38 @@
+{
+  "name": "place-suggestion-service",
+  "version": "1.0.0",
+  "description": "Backend service for fetching nearby places using Gemini AI and Google Places API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "places",
+    "recommendations",
+    "gemini",
+    "google-places",
+    "chat-analysis"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@googlemaps/google-maps-services-js": "^3.3.45",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "joi": "^17.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.8"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
