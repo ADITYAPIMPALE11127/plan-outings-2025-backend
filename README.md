@@ -1,8 +1,12 @@
-# Place Suggestion Service
+# Plan Outings 2025 Backend
+
+A comprehensive backend system for AI-powered group outing planning, featuring both place recommendations and movie suggestions.
+
+## 🎯 Place Suggestion Service
 
 A backend service that analyzes group chat conversations using Google's Gemini AI and fetches nearby places using Google Places API to provide personalized recommendations.
 
-## Features
+### Features
 
 - 🤖 **AI-Powered Analysis**: Uses Gemini AI to analyze chat messages and extract preferences
 - 📍 **Location-Based Search**: Integrates with Google Places API for accurate place data
@@ -10,7 +14,7 @@ A backend service that analyzes group chat conversations using Google's Gemini A
 - 🛡️ **Rate Limiting & Security**: Built-in rate limiting and security middleware
 - 📊 **Comprehensive API**: Multiple endpoints for different use cases
 
-## Tech Stack
+### Tech Stack
 
 - **Node.js** with Express.js
 - **Google Gemini AI** for chat analysis and recommendations
@@ -18,6 +22,14 @@ A backend service that analyzes group chat conversations using Google's Gemini A
 - **Joi** for request validation
 - **Helmet** for security
 - **CORS** for cross-origin requests
+
+## 🎬 Movie Suggestion System
+
+### [MoviesReccomBot Documentation](https://github.com/ADITYAPIMPALE11127/plan-outings-2025-backend/blob/main/MoviesReccomBot/MovieReccomSys.md)
+
+AI-powered movie suggestions based on group chat conversations.
+
+**Live API**: https://moviesreccombot.onrender.com
 
 ## Setup
 
@@ -252,13 +264,18 @@ The API returns structured error responses:
 ### Project Structure
 
 ```
-place-suggestion-service/
-├── places.js                 # Google Places API service
-├── recommendation_places.js  # Gemini AI recommendation service
-├── index.js                  # Main server file
-├── package.json              # Dependencies and scripts
-├── env.example               # Environment variables template
-└── README.md                 # This file
+plan-outings-2025-backend/
+├── MoviesReccomBot/              # Movie recommendation system
+│   ├── app.js                    # Main movie service
+│   ├── routes/suggestions.js     # Movie suggestion routes
+│   ├── services/                 # Movie service modules
+│   └── MovieReccomSys.md        # Movie system documentation
+├── places.js                     # Google Places API service
+├── recommendation_places.js     # Gemini AI recommendation service
+├── index.js                      # Main server file
+├── package.json                  # Dependencies and scripts
+├── env.example                   # Environment variables template
+└── README.md                     # This file
 ```
 
 ### Adding New Features

@@ -1,0 +1,35 @@
+{
+  "name": "moviesreccombot",
+  "version": "1.0.0",
+  "description": "AI-powered movie suggestion system for group chats",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js",
+    "test": "echo \"No tests specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ADITYAPIMPALE11127/plan-outings-2025-backend.git"
+  },
+  "keywords": ["movies", "ai", "suggestions", "chat"],
+  "author": "Aditya Pimpale",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ADITYAPIMPALE11127/plan-outings-2025-backend/issues"
+  },
+  "homepage": "https://github.com/ADITYAPIMPALE11127/plan-outings-2025-backend#readme",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "cors": "^2.8.5",
+    "csv-stringify": "^6.6.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "firebase-admin": "^13.5.0",
+    "openai": "^6.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
