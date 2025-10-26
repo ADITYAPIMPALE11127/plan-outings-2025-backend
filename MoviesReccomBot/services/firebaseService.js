@@ -1,14 +1,86 @@
 const admin = require('firebase-admin');
 
-// For testing, we'll use mock data. Replace this with your actual Firebase config later
+// Initialize Firebase Admin
+const initializeFirebase = () => {
+  try {
+    // Check if we have the required environment variables
+    if (process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL) {
+      
+      // Clean up the private key - remove quotes and fix newlines
+      const privateKey = process.env.FIREBASE_PRIVATE_KEY
+        .replace(/^"|"$/g, '') // Remove surrounding quotes if present
+        .replace(/\\n/g, '\n'); // Convert \n to actual newlines
+      
+      admin.initializeApp({
+        credential: admin.credential.cert({
+          projectId: process.env.FIREBASE_PROJECT_ID,
+          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+          privateKey: privateKey,
+        }),
+        databaseURL: process.env.FIREBASE_DATABASE_URL || 'https://plan-outings-user-data-default-rtdb.firebaseio.com'
+      });
+      
+      console.log('✅ Firebase Admin initialized successfully');
+      return true;
+    } else {
+      console.log('❌ Firebase environment variables missing, using mock data only');
+      return false;
+    }
+  } catch (error) {
+    console.log('❌ Firebase initialization failed:', error.message);
+    return false;
+  }
+};
+
+// Initialize Firebase
+const firebaseInitialized = initializeFirebase();
+const db = firebaseInitialized ? admin.database() : null;
+
 class FirebaseService {
-  
-  // Mock chat data for testing - replace with real Firebase later
-  async getChatMessages(chatId) {
-    console.log(`Getting mock chat messages for: ${chatId}`);
+  async getChatMessages(chatId, limit = 50) {
+    try {
+      if (!firebaseInitialized || !db) {
+        console.log('❌ Firebase not available, using mock data');
+        return this.getMockMessages(chatId);
+      }
+
+      console.log(`📥 Fetching real chat messages for: ${chatId}`);
+      
+      const messagesRef = db.ref(`chats/${chatId}/messages`);
+      const snapshot = await messagesRef
+        .orderByChild('timestamp')
+        .limitToLast(limit)
+        .once('value');
+      
+      if (!snapshot.exists()) {
+        console.log(`❌ No messages found for chat: ${chatId}`);
+        return this.getMockMessages(chatId);
+      }
+      
+      const messages = [];
+      snapshot.forEach((childSnapshot) => {
+        const message = childSnapshot.val();
+        messages.push({
+          id: childSnapshot.key,
+          sender: message.sender || 'Unknown',
+          text: message.text || message.message || '',
+          timestamp: message.timestamp || Date.now()
+        });
+      });
+      
+      console.log(`✅ Found ${messages.length} real messages for chat: ${chatId}`);
+      return messages.reverse();
+      
+    } catch (error) {
+      console.error('❌ Error fetching from Firebase:', error);
+      return this.getMockMessages(chatId);
+    }
+  }
+
+  getMockMessages(chatId) {
+    console.log(`🔄 Using mock data for chat: ${chatId}`);
     
-    // Sample chat conversations for testing
-    const sampleChats = {
+    const mockChats = {
       'chat1': [
         { sender: 'User1', text: 'I love action movies with great fight scenes!', timestamp: Date.now() },
         { sender: 'User2', text: 'Yeah, but some comedy would be nice too', timestamp: Date.now() },
@@ -26,27 +98,8 @@ class FirebaseService {
       ]
     };
 
-    return sampleChats[chatId] || sampleChats['chat1'];
+    return mockChats[chatId] || mockChats['chat1'];
   }
-
-  // Get real Firebase data (commented out for now)
-  /*
-  async getRealChatMessages(chatId) {
-    // Your Firebase initialization code here
-    const serviceAccount = require('./path/to/serviceAccountKey.json');
-    
-    if (!admin.apps.length) {
-      admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-        databaseURL: 'your-database-url'
-      });
-    }
-
-    const db = admin.database();
-    const snapshot = await db.ref(`chats/${chatId}/messages`).once('value');
-    return snapshot.val() || [];
-  }
-  */
 }
 
 module.exports = new FirebaseService();
